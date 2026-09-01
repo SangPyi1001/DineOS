@@ -1,52 +1,110 @@
-<!DOCTYPE html>
-<html lang="my">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DineOS Menu</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+/* ==========================================
+   HEADER TOP & SIDEBAR STYLING
+   ========================================== */
 
-    <!-- Header Section -->
-    <header class="app-header">
-        <div class="header-top">
-            <button class="menu-btn" onclick="openSidebar()">☰</button>
-            <h1>DineOS Menu</h1>
-            <div style="width: 24px;"></div> <!-- Alignment Balance -->
-        </div>
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
 
-        <div id="noticeBanner" class="notice-banner" style="display:none;"></div>
+.menu-btn {
+    background: none;
+    border: none;
+    color: var(--header-text);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 2px 8px;
+    border-radius: 6px;
+}
 
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="ဟင်းပွဲများ ရှာရန်...">
-        </div>
+.menu-btn:active {
+    background: rgba(255, 255, 255, 0.2);
+}
 
-        <div id="categoriesBar" class="categories-bar"></div>
-    </header>
+/* Overlay / Backdrop */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--modal-overlay);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    backdrop-filter: blur(3px);
+}
 
-    <!-- 🚀 Slidebar (Navigation Drawer) Section -->
-    <div id="sidebarOverlay" class="sidebar-overlay" onclick="closeSidebar()"></div>
-    
-    <aside id="sidebar" class="sidebar">
-        <div class="sidebar-header">
-            <h2>DineOS</h2>
-            <button class="close-btn" onclick="closeSidebar()">&times;</button>
-        </div>
-        <div class="sidebar-content">
-            <ul class="sidebar-menu">
-                <li onclick="closeSidebar(); filterByCategory('All');">🏠 ပင်မစာမျက်နှာ (Home)</li>
-                <li onclick="closeSidebar(); fetchMenuFromTelegram();">🔄 Menu Refresh လုပ်ရန်</li>
-                <li onclick="closeSidebar(); alert('DineOS Order System v1.0');">ℹ️ App အကြောင်း</li>
-            </ul>
-        </div>
-    </aside>
+.sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
 
-    <!-- Main Content -->
-    <main>
-        <div id="menuGrid" class="menu-grid"></div>
-    </main>
+/* Sidebar Drawer Container */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -280px; /* hidden by default */
+    width: 260px;
+    height: 100%;
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+    z-index: 1001;
+    transition: left 0.3s ease;
+    box-shadow: 4px 0 15px var(--card-shadow);
+    display: flex;
+    flex-direction: column;
+}
 
-    <script src="app.js"></script>
-</body>
-</html>
+.sidebar.open {
+    left: 0; /* slide in */
+}
+
+.sidebar-header {
+    padding: 20px 15px;
+    background: var(--header-bg);
+    color: var(--header-text);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sidebar-header h2 {
+    font-size: 1.2rem;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: var(--header-text);
+    font-size: 1.8rem;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.sidebar-content {
+    padding: 10px 0;
+    flex-grow: 1;
+}
+
+.sidebar-menu {
+    list-style: none;
+}
+
+.sidebar-menu li {
+    padding: 14px 20px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--input-border);
+    transition: background 0.2s ease;
+}
+
+.sidebar-menu li:hover {
+    background: var(--input-bg);
+}
