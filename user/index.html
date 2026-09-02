@@ -3,49 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DineOS Menu</title>
+    <title>DineOS - Menu</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Header Section -->
+    <!-- 🚀 OTA Update Notification Modal (Mini Window) -->
+    <div id="updateModal" class="modal-overlay hidden">
+        <div class="update-card glass-panel">
+            <div class="update-header">
+                <div class="update-icon-wrapper">
+                    <span class="update-icon">🚀</span>
+                </div>
+                <h3>New update available now</h3>
+                <span class="version-badge" id="newVersionTag">v1.0.0</span>
+            </div>
+            
+            <div class="update-body">
+                <h4>What's news</h4>
+                <ul id="whatsNewList" class="news-list">
+                    <!-- JS မှ Release Notes များကို Bullet ဖြင့် ဝင်မည် -->
+                </ul>
+            </div>
+            
+            <div class="update-footer">
+                <button class="btn btn-secondary" onclick="closeUpdateModal()">Later</button>
+                <button class="btn btn-primary" onclick="applyUpdate()">Update Now</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🛒 Main App Container -->
     <header class="app-header">
-        <div class="header-top">
-            <button class="menu-btn" onclick="openSidebar()">☰</button>
-            <h1>DineOS Menu</h1>
-            <div style="width: 24px;"></div> <!-- Alignment Balance -->
+        <div class="header-content">
+            <h2>DineOS <span style="color: var(--primary); font-size: 1rem;">Menu</span></h2>
+            <div class="cart-icon" onclick="toggleCart()">
+                🛒 <span id="cartCount" class="badge">0</span>
+            </div>
         </div>
-
-        <div id="noticeBanner" class="notice-banner" style="display:none;"></div>
-
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="ဟင်းပွဲများ ရှာရန်...">
-        </div>
-
-        <div id="categoriesBar" class="categories-bar"></div>
     </header>
 
-    <!-- 🚀 Slidebar (Navigation Drawer) Section -->
-    <div id="sidebarOverlay" class="sidebar-overlay" onclick="closeSidebar()"></div>
-    
-    <aside id="sidebar" class="sidebar">
-        <div class="sidebar-header">
-            <h2>DineOS</h2>
-            <button class="close-btn" onclick="closeSidebar()">&times;</button>
+    <main class="main-container">
+        <!-- 🗂️ Categories Scroll Bar -->
+        <div class="category-scroll" id="categoryContainer">
+            <!-- Categories ဝင်မည် -->
         </div>
-        <div class="sidebar-content">
-            <ul class="sidebar-menu">
-                <li onclick="closeSidebar(); filterByCategory('All');">🏠 ပင်မစာမျက်နှာ (Home)</li>
-                <li onclick="closeSidebar(); fetchMenuFromTelegram();">🔄 Menu Refresh လုပ်ရန်</li>
-                <li onclick="closeSidebar(); alert('DineOS Order System v1.0');">ℹ️ App အကြောင်း</li>
-            </ul>
-        </div>
-    </aside>
 
-    <!-- Main Content -->
-    <main>
-        <div id="menuGrid" class="menu-grid"></div>
+        <!-- 🍛 Food Items Grid -->
+        <div class="food-grid" id="foodGrid">
+            <div class="loading-text">Menu Data ရယူနေသည်...</div>
+        </div>
     </main>
+
+    <!-- 🛍️ Cart Sidebar -->
+    <div id="cartSidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h3>သင့်မှာယူမှုများ 🛒</h3>
+            <button class="close-btn" onclick="toggleCart()">✕</button>
+        </div>
+        <div class="cart-body" id="cartItemsContainer">
+            <p style="text-align:center; color:gray; margin-top: 50px;">ခြင်းတောင်းထဲတွင် ဘာမှမရှိသေးပါ။</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>စုစုပေါင်း:</span>
+                <strong id="cartTotalAmt">0.00 RM</strong>
+            </div>
+            <button class="btn btn-primary btn-block" onclick="checkout()">✅ ပို့ဆောင်မည် (Order)</button>
+        </div>
+    </div>
+
+    <!-- Mobile Overlay for Cart -->
+    <div id="cartOverlay" class="sidebar-overlay" onclick="toggleCart()"></div>
 
     <script src="app.js"></script>
 </body>
