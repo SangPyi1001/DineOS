@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="my" data-theme="light">
+<html lang="my">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,62 +8,34 @@
 </head>
 <body>
 
-    <!-- 🌟 Left Navigation Sidebar (Settings & About) -->
-    <div id="navSidebar" class="side-nav glass-panel">
-        <div class="nav-header">
-            <h3>⚙️ Settings</h3>
-            <button class="close-btn" onclick="toggleNav()">✕</button>
-        </div>
-        <div class="nav-body">
-            
-            <!-- Dark / Light Mode Toggle -->
-            <div class="theme-toggle-box glass-panel">
-                <span>🌙 Dark Mode</span>
-                <label class="switch">
-                    <input type="checkbox" id="themeToggle" onchange="toggleTheme()">
-                    <span class="slider round"></span>
-                </label>
-            </div>
-
-            <!-- ရွှေ့ပြောင်းထားသော စာသားနှင့် Line -->
-            <div class="status-msg">
-                <p>✅ Menu များ ပြင်ဆင်ပြီးပါပြီ</p>
-            </div>
-            <hr class="sidebar-divider">
-
-            <!-- About DineOS Section -->
-            <div class="about-section glass-panel">
-                <h4>ℹ️ About DineOS</h4>
-                <p><strong>DineOS</strong> သည် Customer များ မိမိတို့ဖုန်းမှတစ်ဆင့် အလွယ်တကူ ဟင်းပွဲများကြည့်ရှု၍ Order တင်နိုင်သော Smart Restaurant System ဖြစ်ပါသည်။</p>
-                <small>Version: v1.0.2</small>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- 🚀 OTA Update Notification Modal -->
+    <!-- 🚀 OTA Update Notification Modal (Mini Window) -->
     <div id="updateModal" class="modal-overlay hidden">
         <div class="update-card glass-panel">
             <div class="update-header">
-                <div class="update-icon-wrapper">🚀</div>
+                <div class="update-icon-wrapper">
+                    <span class="update-icon">🚀</span>
+                </div>
                 <h3>New update available now</h3>
                 <span class="version-badge" id="newVersionTag">v1.0.0</span>
             </div>
+            
             <div class="update-body">
                 <h4>What's news</h4>
-                <ul id="whatsNewList" class="news-list"></ul>
+                <ul id="whatsNewList" class="news-list">
+                    <!-- JS မှ Release Notes များကို Bullet ဖြင့် ဝင်မည် -->
+                </ul>
             </div>
+            
             <div class="update-footer">
-                <button class="btn btn-secondary glass-panel" onclick="closeUpdateModal()">Later</button>
+                <button class="btn btn-secondary" onclick="closeUpdateModal()">Later</button>
                 <button class="btn btn-primary" onclick="applyUpdate()">Update Now</button>
             </div>
         </div>
     </div>
 
     <!-- 🛒 Main App Container -->
-    <header class="app-header glass-panel">
+    <header class="app-header">
         <div class="header-content">
-            <div class="menu-icon" onclick="toggleNav()">☰</div>
             <h2>DineOS <span style="color: var(--primary); font-size: 1rem;">Menu</span></h2>
             <div class="cart-icon" onclick="toggleCart()">
                 🛒 <span id="cartCount" class="badge">0</span>
@@ -72,15 +44,9 @@
     </header>
 
     <main class="main-container">
-        
-        <!-- 🔍 Search Bar -->
-        <div class="search-container glass-panel">
-            <input type="text" id="searchInput" placeholder="🔍 ဟင်းပွဲများ ရှာဖွေရန်..." oninput="searchMenu()">
-        </div>
-
-        <!-- 🗂️ Categories -->
+        <!-- 🗂️ Categories Scroll Bar -->
         <div class="category-scroll" id="categoryContainer">
-            <!-- Categories Data ဝင်မည် -->
+            <!-- Categories ဝင်မည် -->
         </div>
 
         <!-- 🍛 Food Items Grid -->
@@ -90,25 +56,25 @@
     </main>
 
     <!-- 🛍️ Cart Sidebar -->
-    <div id="cartSidebar" class="cart-sidebar glass-panel">
+    <div id="cartSidebar" class="cart-sidebar">
         <div class="cart-header">
             <h3>သင့်မှာယူမှုများ 🛒</h3>
             <button class="close-btn" onclick="toggleCart()">✕</button>
         </div>
         <div class="cart-body" id="cartItemsContainer">
-            <p style="text-align:center; color: var(--text-muted); margin-top: 50px;">ခြင်းတောင်းထဲတွင် ဘာမှမရှိသေးပါ။</p>
+            <p style="text-align:center; color:gray; margin-top: 50px;">ခြင်းတောင်းထဲတွင် ဘာမှမရှိသေးပါ။</p>
         </div>
         <div class="cart-footer">
             <div class="cart-total">
                 <span>စုစုပေါင်း:</span>
-                <strong id="cartTotalAmt">0.00 RM</strong> <!-- RM သို့ ပြောင်းထားပါသည် -->
+                <strong id="cartTotalAmt">0.00 RM</strong>
             </div>
             <button class="btn btn-primary btn-block" onclick="checkout()">✅ ပို့ဆောင်မည် (Order)</button>
         </div>
     </div>
 
-    <!-- Overlay Backgrounds -->
-    <div id="mainOverlay" class="sidebar-overlay" onclick="closeAllSidebars()"></div>
+    <!-- Mobile Overlay for Cart -->
+    <div id="cartOverlay" class="sidebar-overlay" onclick="toggleCart()"></div>
 
     <script src="app.js"></script>
 </body>
